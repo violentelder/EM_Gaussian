@@ -1,17 +1,23 @@
 clear all;close all;clc;
 %-------------读取图像-------------
-%img = double(rgb2gray(imread('image_0467.jpg')));
-image=imread('image_0467.jpg');
+%img = double(rgb2gray(imread('./images/1.jpg')));
+image=imread('images/image_0467.jpg');
+figure
+imshow(image)
 imageg1 = image(:,:,2);%只保留绿色通道
 imageg=double(imageg1);
+
 %----------------对输入图像预处理---------------
-H=fspecial('motion',20,45);
-MotionBlur = imfilter(imageg,H,'replicate');
-imshow('MotionBlur');
+H1=fspecial('motion',20,45);
+MotionBlur = imfilter(imageg,H1,'replicate');
+
 %---------------设定EM算法的初值-----------
-cluster_num =2 ;%设置聚类数，既想要分类的块数
-mu = (1:cluster_num)./(cluster_num + 1) .* max(max(H1));%期望的初值
-sigma = 20*ones(1,cluster_num);%方差的初值
+%设置聚类数，既想要分类的块数
+cluster_num =2 ;
+%期望的初值
+mu = (1:cluster_num)./(cluster_num + 1) .* max(max(H1));
+%方差的初值
+sigma = 20*ones(1,cluster_num);
 pw = zeros(cluster_num,size(H1,1)*size(H1,2));%构造一个零矩阵表示每个点的概率值，行数为聚类的数量，列数为图像的像素点的个数
 pc = rand(1,cluster_num);%随机生成一组概率值(权重值)  是否可以不用随机生成？试试看效果
 pc = pc/sum(pc);%将类概率归一化
