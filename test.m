@@ -2,7 +2,7 @@ clear
 close all
 clc
 %-------------读取图像-------------
-image=imread('images/image_0462.jpg');
+image=imread('images/image_0470.jpg');
 %----------------对输入图像预处理---------------
 %转换色彩空间到L * a * b *空间
 cform = makecform('srgb2lab'); 
@@ -75,8 +75,7 @@ while iter <= max_iter
     label = reshape(label,size(H1));
     figure(1)
     subplot(1,2,2)
-    label1 = medfilt2(label);
-    label1 = imbinarize(label1, 'adaptive');
+    label1 = imbinarize(label, 'adaptive');
     imshow(label1,[])
     title(['iter = ',num2str(iter)]);
     pause(0.1);
@@ -100,7 +99,7 @@ title('方差变化过程');
 
 figure(5)
 %元胞型数组
-s_image = cell(1:3);
+s_image = cell(1:cluster_num);
 rgb_label = repmat(label1, [1,1,3]);
 for k=1:cluster_num
     color = image;
