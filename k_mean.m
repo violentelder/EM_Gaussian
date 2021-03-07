@@ -2,7 +2,7 @@ clear
 close all
 %======聚类算法====
 %k均值算法
-i = imread('images/image_0462.jpg');
+i = imread('images/image_0464.jpg');
 figure
 subplot(2,3,1)
 imshow(i)

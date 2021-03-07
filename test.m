@@ -2,7 +2,8 @@ clear
 close all
 clc
 %-------------读取图像-------------
-image=imread('images/image_0470.jpg');
+image=imread('images/image_0463.jpg');
+
 %----------------对输入图像预处理---------------
 %转换色彩空间到L * a * b *空间
 cform = makecform('srgb2lab'); 
@@ -18,7 +19,7 @@ norm_max = 0;
 for i = 1:3
     [HIST,~] = histcounts(lab_i(:,:,i),0:1:255, 'Normalization','pdf');
     [pks,locs] =findpeaks(HIST,'minpeakdistance',20,'minpeakheight',0.014);
-    tt = norm(locs);
+    tt = max(locs) - min(locs);
     if(tt > norm_max)
         norm_max = tt;
         aisle = i;
@@ -31,7 +32,7 @@ H1 = medfilt3(image_g);
 
 %---------------设定EM算法的初值-----------
 %设置聚类数，既想要分类的块数
-cluster_num =2 ;
+cluster_num =2;
 %期望的初值
 mu = [107, 150];
 %方差的初值
